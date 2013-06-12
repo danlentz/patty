@@ -5,11 +5,26 @@
 
 (defpackage #:patty
   (:documentation "Functional data structures on top of CLOS.")
-  (:use #:cl
-	#:alexandria
-	#:patty.mop)
-  (:export #:make
-	   #:defmethods
-	   #:defdata-type
-	   #:defdata-unique
-	   #:defdata-object))
+  (:use #:cl #:alexandria #:patty.mop)
+  (:export
+    ;; patty builtin
+    #:make
+    #:defmethods
+    #:defdata-type
+    #:defdata-unique
+    #:defdata-object
+    ;; patty example (path api)
+    #:path
+    #:pathroot
+    #:absolutep
+    #:join-paths
+    #:path=
+    #:native-path
+    #:unix-path
+    #:relative-path
+    #:absolute-path
+    #:root-dir
+    #:current-dir
+    #:regular-path
+    #:regular-absolute-path
+    #:regular-relative-path))

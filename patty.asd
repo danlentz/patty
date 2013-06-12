@@ -18,16 +18,18 @@
   :depends-on ("alexandria" "closer-mop" "moptilities")
   :components
   ((:module "patty"
-	    :serial t
-	    :components
-	    ((:module "mop"
-		      :serial t
-		      :components
-		      ((:file "package")
-		       (:file "finalize-class-mixin")
-		       (:file "util")
-		       (:file "abstract-class")
-		       (:file "singleton-class")
-		       (:file "patty-class")))
-	     (:file "package")
-	     (:file "patty")))))
+     :serial t
+     :components
+     ((:module "mop"
+        :serial t
+        :components
+        ((:file "package")
+          (:file "finalize-class-mixin")
+          (:file "util")
+          (:file "abstract-class")
+          (:file "singleton-class")
+          (:file "patty-class")))
+       (:file "package")
+       (:file"patty")
+       (:file"path-class")
+       ))))
