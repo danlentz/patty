@@ -1,0 +1,639 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.1.0" />
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  border-bottom: 2px solid silver;
+  padding-top: 0.5em;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble,
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-right: 10%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock {
+  margin-right: 0%;
+}
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock > div.content {
+  padding-left: 2.0em;
+}
+
+div.attribution {
+  text-align: right;
+}
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.verseblock div.content {
+  white-space: pre;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: italic;
+}
+dd > *:first-child {
+  margin-top: 0;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.olist2 {
+  list-style-type: lower-alpha;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+
+div.hlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+td.hlist1 {
+  vertical-align: top;
+  font-style: italic;
+  padding-right: 0.8em;
+}
+td.hlist2 {
+  vertical-align: top;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-content {
+  padding-left: 2.0em;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+<title>Patty documentation</title>
+</head>
+<body>
+<div id="header">
+<h1>Patty documentation</h1>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<p>I'll occasionally draw parallels to Haskell concepts in this document. If you
+don't know Haskell, you can safely ignore them. Basic knowledge of Common Lisp
+is assumed.</p>
+</div>
+</div>
+<h2>Why Patty?</h2>
+<div class="sectionbody">
+<p>CLOS is a very powerful object system. In most cases, you need only a subset of
+it's functionality. Patty is a thin layer on top of CLOS that makes the
+definition of and work with functional data structures concise and easy.</p>
+<p>In the context of Patty, functional data structures means especially
+immutability and putting much information about objects into types.</p>
+</div>
+<h2>Getting Patty</h2>
+<div class="sectionbody">
+<p>More info and downloads can be found at the
+<a href="http://common-lisp.net/project/patty">project page</a>.</p>
+</div>
+<h2>Overview of the <tt>patty</tt> package</h2>
+<div class="sectionbody">
+<div class="tableblock">
+<table rules="none"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Patty syntax</caption>
+<col width="628" />
+<col width="354" />
+<thead>
+  <tr>
+    <th align="left">
+    Macro
+    </th>
+    <th align="left">
+    Description
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    <tt>(make class &amp;rest initargs)</tt>
+    </td>
+    <td align="left">
+    Expands into <tt>make-instance</tt>, quoting the class argument.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>(defmethods fun-name &amp;rest clauses)</tt>
+    </td>
+    <td align="left">
+    Define several methods on the generic function with name <tt>fun-name</tt> at once.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>(defdata-type name superclasses &amp;rest clauses)</tt>
+    </td>
+    <td align="left">
+    Define an abstract class.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>(defdata-unique name superclasses &amp;rest clauses)</tt>
+    </td>
+    <td align="left">
+    Define a class that has no instance slots.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    <tt>(defdata-object name superclasses &amp;rest clauses)</tt>
+    </td>
+    <td align="left">
+    Define a class with instance slots.
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<h2>Documentation by example, a pathname library</h2>
+<div class="sectionbody">
+<p>First, load the <tt>patty</tt> system and use the <tt>patty</tt> package:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(asdf:oos 'asdf:load-op "patty")
+(use-package :patty)</tt></pre>
+</div></div>
+<p>We start by defining an abstract base type for all path objects:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-type path ())</tt></pre>
+</div></div>
+<p>This expands into a <tt>defclass</tt> form with a the <tt>abstract-class</tt> class from the
+<tt>patty.mop</tt> package as metaclass. The first argument is the class name, the
+second is a list of superclasses. We can't instantiate <tt>path</tt>, but we can use it
+in method specializers and define instantiable subclasses.</p>
+<p>Next we define the <tt>pathroot</tt> type as a subtype of <tt>path</tt>. We can put a
+documentation string after the superclass list:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-type pathroot (path)
+  "A pathroot can name a host, or a drive, or the root directory of a
+  unix filesystem, or the current directory, etc.")</tt></pre>
+</div></div>
+<p>Additionally, a path has a list of directory/file names. We define the type
+<tt>pathlist</tt> for this purpose:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defun list-of-strings-p (list)
+  (or (null list)
+      (and (stringp (car list)) (list-of-strings-p (cdr list)))))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(deftype pathlist () '(and list (satisfies list-of-strings-p)))</tt></pre>
+</div></div>
+<p>Path objects can be manipulated, combined and transformed via a protocol of
+generic functions. In Haskell, this would be a type class:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defgeneric pathroot (path)
+  (:documentation "Get the root of a path. The result is of type pathroot.")
+  (:method ((path pathroot))
+    path))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defgeneric pathlist (path)
+  (:documentation "Get the directory/filename list, of type pathlist.")
+  (:method ((_ pathroot))
+    nil))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defgeneric absolutep (path)
+  (:documentation "Is this path absolute?"))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defgeneric join-paths (a b)
+  (:documentation "Get a path that refers to the file/directory b under the directory a")
+  (:method ((a path) (b path))
+    (error "Can't join pathes ~S and ~S." a b)))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defgeneric path= (a b)
+  (:documentation "Are the paths a and b equal?")
+  (:method ((a path) (b path))
+    nil))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defgeneric native-path (path)
+  (:documentation "Convert path into a string in the platforms native filename syntax."))</tt></pre>
+</div></div>
+<h3>Unix paths</h3>
+<p>Now we'll implement this protocol for Unix filenames. A unix filename can be
+relative to the current directory, or relative to the root directory. In the
+former case it's a relative filename, in the latter case an absolute one. Let's
+capture this in types:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-type unix-path (path))
+(defdata-type relative-path (unix-path))
+(defdata-type absolute-path (unix-path))</tt></pre>
+</div></div>
+<p>The "base" case for an absolute path is the root directory. The base case for a
+relative path is the current directory:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-unique root-dir (pathroot absolute-path)
+  (:derive-equal path=))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-unique current-dir (pathroot relative-path)
+  (:derive-equal path=))</tt></pre>
+</div></div>
+<p>The instances of a type defined via <tt>defdata-unique</tt> have no instance slots,
+that is, all information is in the type itself. Thus <tt>defdata-unique</tt> creates a
+class whose metaclass is <tt>singleton-class</tt> (from the <tt>patty.mop</tt> package) and
+every call to <tt>make-instance</tt> returns the same object (but consider this as an
+implementation detail). The <tt>:derive-equal</tt> option adds a method to the <tt>path=</tt>
+function.</p>
+<p>All other paths have a pathlist with at least one element:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(deftype not-empty-pathlist () '(and cons pathlist))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-type regular-path (unix-path)
+  (:slots (pathlist :type not-empty-pathlist
+                    :equality equal)))</tt></pre>
+</div></div>
+<p>Here we see the syntax for adding slots. The slot definition generates the
+<tt>pathlist</tt> reader method. No writer method is generated and the slot name is
+gensym'd. The <tt>:equality</tt> option says that slot values should be compared with
+the <tt>equal</tt> function (it defaults to <tt>eql</tt> when the <tt>:equality</tt> option is not
+given). This is used to generate an equality method when the <tt>:derive-equal</tt>
+option is specified for an instantiable subclass.</p>
+<p>We define two concrete subtypes for <tt>regular-path</tt>:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-object regular-absolute-path (regular-path absolute-path)
+  (:derive-equal path=))</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defdata-object regular-relative-path (regular-path relative-path)
+  (:derive-equal path=))</tt></pre>
+</div></div>
+<p><tt>defdata-object</tt> defines an instantiable class with instance slots. In this
+case, the only instance slot is inherited from <tt>regular-path</tt>.</p>
+<p>OK, we've got all data types now! What's left to do? Methods for <tt>pathroot</tt>,
+<tt>join-paths</tt>, <tt>absolutep</tt> and <tt>native-path</tt>. Here comes <tt>defmethods</tt> into play.
+Let's start with <tt>pathroot</tt>:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defmethods pathroot
+  (= ((_ relative-path))
+     (make current-dir))
+  (= ((_ absolute-path))
+     (make root-dir)))</tt></pre>
+</div></div>
+<p>Each clause that starts with an <tt>=</tt> sign adds a method to the generic function
+<tt>pathroot</tt>. Per convention, the underline is used for unused parameter names.
+The best way to learn <tt>defmethods</tt> is to macroexpand the examples given here. On
+to <tt>absolutep</tt>:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defmethods absolutep
+  (= ((_ relative-path))
+     nil)
+  (= ((_ absolute-path))
+     t))</tt></pre>
+</div></div>
+<p>Nothing new here, <tt>join-paths</tt> gets more interesting:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defmethods join-paths
+  (= ((a absolute-path) (b regular-relative-path))
+     (mk regular-absolute-path))
+  (= ((a relative-path) (b regular-relative-path))
+     (mk regular-relative-path))
+  (syntax mk (regclass)
+          `(make ,regclass :pathlist (append (pathlist a) (pathlist b)))))</tt></pre>
+</div></div>
+<p>A <tt>syntax</tt> clause defines a macro that is available in the <tt>defmethods</tt> body. A
+<tt>defmethods</tt> can have any number of <tt>syntax</tt> clauses.</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defmethods native-path
+  (= ((_ current-dir))
+     ".")
+  (= ((path unix-path))
+     (with-output-to-string (res)
+       (when (absolutep path) (write-char #\/ res))
+       (labels ((out (components)
+                  (write-string (car components) res)
+                  (when (cdr components)
+                    (write-char #\/ res)
+                    (out (cdr components)))))
+         (when (pathlist path) (out (pathlist path)))))))</tt></pre>
+</div></div>
+<p>For convenience, we specify a <tt>print-object</tt> method for paths:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defmethod print-object ((path path) stream)
+  (write `(path ,(native-path path)) :stream stream))</tt></pre>
+</div></div>
+<p>And finally, we can play at the REPL:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>CL-USER&gt; (defparameter *a* (make regular-relative-path :pathlist '("foo" "bar")))
+*A*
+CL-USER&gt; *a*
+(PATH "foo/bar")
+CL-USER&gt; (pathroot *a*)
+(PATH ".")
+CL-USER&gt; (pathlist *a*)
+("foo" "bar")
+CL-USER&gt; (absolutep *a*)
+NIL
+CL-USER&gt; (defparameter *b* (make regular-absolute-path :pathlist '("foo" "bar")))
+*B*
+CL-USER&gt; *b*
+(PATH "/foo/bar")
+CL-USER&gt; (absolutep *b*)
+T
+CL-USER&gt; (path= *a* *b*)
+NIL
+CL-USER&gt; (join-paths *b* *a*)
+(PATH "/foo/bar/foo/bar")
+CL-USER&gt; (pathroot *b*)
+(PATH "/")</tt></pre>
+</div></div>
+</div>
+<h2>Wait, there's more!</h2>
+<div class="sectionbody">
+<p>We've seen the <tt>=</tt> and <tt>syntax</tt> clauses for <tt>defmethods</tt> already. There are two
+additional clauses, namely <tt>where</tt>, to define local functions, and <tt>expr</tt> to
+define a local symbol macro. A silly example using both:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>(defmethods foo
+  (= ((a string) (b string))
+     (wr "strings" a b len))
+  (= ((a list) (b list))
+     (wr "lists" a b len))
+  (where wr (type a b combined-length)
+         (format t "~A ~S ~S, combined length: ~A~%" type a b combined-length))
+  (expr len (+ (length a) (length b))))</tt></pre>
+</div></div>
+<p>We could also pull the usage of <tt>len</tt> into <tt>wr</tt>, and ditch the <tt>combined-length</tt>
+parameter.</p>
+<p>At the REPL:</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>CL-USER&gt; (foo "hello" "world")
+strings "hello" "world", combined length: 10
+NIL
+CL-USER&gt; (foo '(1 2 3) '(4 5 6))
+lists (1 2 3) (4 5 6), combined length: 6
+NIL</tt></pre>
+</div></div>
+<p>It doesn't matter from which package the clause name symbols, <tt>=</tt>, <tt>where</tt>,
+<tt>syntax</tt> and <tt>expr</tt> come, only their <tt>symbol-name</tt> matters. A <tt>defmethods</tt>
+expands into a <tt>symbol-macrolet</tt> wrapped around a <tt>macrolet</tt> wrapped around a
+<tt>labels</tt> wrapped around <tt>defmethod</tt> forms. It follows that functions defined via
+<tt>where</tt> can be recursive and can refer to each other.</p>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 04-Mar-2007 22:46:11 CEST
+</div>
+</div>
+</body>
+</html>

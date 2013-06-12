@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+ <title>Patty - project home</title>
+ <link rel="stylesheet" type="text/css" href="style.css"/>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+</head>
+
+
+
+<!-- just swap out "sample" for your project's name most places -->
+
+
+
+<body>
+ <div class="header">
+  <h1>Patty</h1>
+  <h2>Functional data structures on top of CLOS</h2>
+ </div>
+
+ <h3>Introduction</h3>
+
+ <p>
+  Patty is a small library that facilitates working with functional data
+  structures. It consists of a few macros and metaclasses that integrate
+  nicely with CLOS. Code using patty is similar in style to Haskell code
+  using algebraic data types, primitive pattern matching and type
+  classes.
+ </p>
+
+ <h3>Mailing Lists</h3>
+ <ul>
+  <li>
+   <a
+    href="http://www.common-lisp.net/mailman/listinfo/patty-devel">
+    patty-devel</a>:&nbsp;For developers, bug reports and general discussion.</li>
+  <!--
+  <li>
+   <a
+    href="http://www.common-lisp.net/mailman/listinfo/sample-cvs">
+    SAMPLE-cvs</a><br/>CVS log feed.</li>
+  -->
+  <li>
+   <a
+    href="http://www.common-lisp.net/mailman/listinfo/patty-announce">
+    patty-announce</a>:&nbsp;Announcements for new releases, low volume.</li>
+
+ </ul>
+
+ <h3>Download</h3>
+
+ <p>
+  The latest release is 1.0.6. <a
+      href="http://common-lisp.net/project/patty/patty_1.0.6.tar.gz">
+      Download gzipped tarball.</a>
+  <br/>
+  It depends on <a href="http://www.cliki.net/closer-mop">closer-mop</a>,
+  <a href="http://common-lisp.net/project/moptilities/">moptilities</a>
+  and <a href="http://common-lisp.net/project/alexandria/">Alexandria</a>.
+  <a href="http://common-lisp.net/project/lift/">LIFT</a> and
+  <a href="http://weitz.de/cl-ppcre/">cl-ppcre</a> are only needed to
+  run the test suite (only the patty-test system depends on them).
+  <br/>
+  Alternatively you can install via <a href="http://common-lisp.net/project/asdf-install/">
+      asdf-install</a> (with the caveat that Alexandria is currently not
+  asdf-installable).
+
+ <p>
+ You can get the latest via <a href="http://www.darcs.net/">darcs</a>:<br/>
+  <pre>
+    darcs get http://common-lisp.net/project/patty/darcs/patty
+  </pre>
+ </p>
+
+ <h3>News</h3>
+ <p>
+ <ul>
+     <li>2007-04-07<br/>
+        Release patty 1.0.6. Previously, slot names were generated
+        with gensym during <code>defdata-*</code> expansion. This
+        turned out to be rather dumb, especially for interactive
+        development. So now the slot names are the same as the reader
+        method names, but wrapped in angle brackets. This release
+        also fixes a bug in a MOP utility function.
+     <li>2007-03-25<br/>
+        Release patty 1.0.4. Patty utilizes the MOP now for internal
+        type information bookkeeping. This fixes some incremental
+        compilation and interactive development issues.
+     <li>2007-03-04<br/>
+         There's some <a href="patty.html">documentation</a> now!
+     </li>
+     <li>2007-03-04<br/>
+        Release patty 1.0.2. The only library change is that all slots
+        defined via one of the <code>defdata-</code>* macros have an
+        <code>:initform</code> that signals an error.<br/>
+        Strictly speaking, this is not backwards compatible, but since
+        1.0.0 is only one day old, no docs are up and this was an oversight
+        in the first place, I think it won't hurt anybody.<br/>
+        BTW, I hope to put up some docs today.
+     </li>
+     <li>2007-03-03<br/>
+        Upload home page, darcs repository and release patty 1.0.0!
+     </li>
+ </ul>
+ </p>
+
+ <h3>Acknowledgements</h3>
+ <p>
+ Patty uses the <code>abstract-class</code> and <code>singleton-class</code>
+ definitions from Tim Bradshaw's
+ <a href="http://www.tfeb.org/lisp/hax.html">Lisp hacks</a>.
+ </p>
+
+ <h3>Project members</h3>
+ <pre>Stefan Lang</pre>
+
+ <!--
+ <h3>CVS</h3>
+
+   <p>You can <a
+ href="http://common-lisp.net/cgi-bin/viewcvs.cgi/?cvsroot=sample">
+browse our CVS repository</a> or download the current development tree via
+ anonymous cvs, as described <a href="">here</a></p>
+ -->
+
+ <!--
+   <div class="footer">
+     <a href="mailto:youraddressehere">Samplus X. Incognitus</a>, 1. Dec. 2003.
+   </div>
+
+   <div class="check">
+     <a href="http://validator.w3.org/check/referer">
+        Valid XHTML 1.0 Strict</a>
+  </div>
+   -->
+ </body>
+</html>

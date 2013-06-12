@@ -1,0 +1,262 @@
+Patty documentation
+===================
+
+I'll occasionally draw parallels to Haskell concepts in this document. If you
+don't know Haskell, you can safely ignore them. Basic knowledge of Common Lisp
+is assumed.
+
+Why Patty?
+----------
+CLOS is a very powerful object system. In most cases, you need only a subset of
+it's functionality. Patty is a thin layer on top of CLOS that makes the
+definition of and work with functional data structures concise and easy.
+
+In the context of Patty, functional data structures means especially
+immutability and putting much information about objects into types.
+
+Getting Patty
+-------------
+
+More info and downloads can be found at the
+link:http://common-lisp.net/project/patty[project page].
+
+Overview of the `patty` package
+-------------------------------
+
+.Patty syntax
+`------------------------------------------------------`------------------------------
+Macro                                                  Description
+------------------------------------------------------------------------------------
+`(make class &rest initargs)`                          Expands into `make-instance`, quoting the class argument.
+`(defmethods fun-name &rest clauses)`                  Define several methods on the generic function with name `fun-name` at once.
+`(defdata-type name superclasses &rest clauses)`       Define an abstract class.
+`(defdata-unique name superclasses &rest clauses)`     Define a class that has no instance slots.
+`(defdata-object name superclasses &rest clauses)`     Define a class with instance slots.
+--------------------------------------------------------------------------------
+
+Documentation by example, a pathname library
+--------------------------------------------
+
+First, load the `patty` system and use the `patty` package:
+
+  (asdf:oos 'asdf:load-op "patty")
+  (use-package :patty)
+
+We start by defining an abstract base type for all path objects:
+
+  (defdata-type path ())
+
+This expands into a `defclass` form with a the `abstract-class` class from the
+`patty.mop` package as metaclass. The first argument is the class name, the
+second is a list of superclasses. We can't instantiate `path`, but we can use it
+in method specializers and define instantiable subclasses.
+
+Next we define the `pathroot` type as a subtype of `path`. We can put a
+documentation string after the superclass list:
+
+  (defdata-type pathroot (path)
+    "A pathroot can name a host, or a drive, or the root directory of a
+    unix filesystem, or the current directory, etc.")
+
+Additionally, a path has a list of directory/file names. We define the type
+`pathlist` for this purpose:
+
+  (defun list-of-strings-p (list)
+    (or (null list)
+        (and (stringp (car list)) (list-of-strings-p (cdr list)))))
+
+  (deftype pathlist () '(and list (satisfies list-of-strings-p)))
+
+Path objects can be manipulated, combined and transformed via a protocol of
+generic functions. In Haskell, this would be a type class:
+
+  (defgeneric pathroot (path)
+    (:documentation "Get the root of a path. The result is of type pathroot.")
+    (:method ((path pathroot))
+      path))
+
+  (defgeneric pathlist (path)
+    (:documentation "Get the directory/filename list, of type pathlist.")
+    (:method ((_ pathroot))
+      nil))
+
+  (defgeneric absolutep (path)
+    (:documentation "Is this path absolute?"))
+
+  (defgeneric join-paths (a b)
+    (:documentation "Get a path that refers to the file/directory b under the directory a")
+    (:method ((a path) (b path))
+      (error "Can't join pathes ~S and ~S." a b)))
+
+  (defgeneric path= (a b)
+    (:documentation "Are the paths a and b equal?")
+    (:method ((a path) (b path))
+      nil))
+
+  (defgeneric native-path (path)
+    (:documentation "Convert path into a string in the platforms native filename syntax."))
+
+Unix paths
+~~~~~~~~~~
+
+Now we'll implement this protocol for Unix filenames. A unix filename can be
+relative to the current directory, or relative to the root directory. In the
+former case it's a relative filename, in the latter case an absolute one. Let's
+capture this in types:
+
+  (defdata-type unix-path (path))
+  (defdata-type relative-path (unix-path))
+  (defdata-type absolute-path (unix-path))
+
+The "base" case for an absolute path is the root directory. The base case for a
+relative path is the current directory:
+
+  (defdata-unique root-dir (pathroot absolute-path)
+    (:derive-equal path=))
+
+  (defdata-unique current-dir (pathroot relative-path)
+    (:derive-equal path=))
+
+The instances of a type defined via `defdata-unique` have no instance slots,
+that is, all information is in the type itself. Thus `defdata-unique` creates a
+class whose metaclass is `singleton-class` (from the `patty.mop` package) and
+every call to `make-instance` returns the same object (but consider this as an
+implementation detail). The `:derive-equal` option adds a method to the `path=`
+function.
+
+All other paths have a pathlist with at least one element:
+
+  (deftype not-empty-pathlist () '(and cons pathlist))
+
+  (defdata-type regular-path (unix-path)
+    (:slots (pathlist :type not-empty-pathlist
+                      :equality equal)))
+
+Here we see the syntax for adding slots. The slot definition generates the
+`pathlist` reader method. No writer method is generated and the slot name is
+gensym'd. The `:equality` option says that slot values should be compared with
+the `equal` function (it defaults to `eql` when the `:equality` option is not
+given). This is used to generate an equality method when the `:derive-equal`
+option is specified for an instantiable subclass.
+
+We define two concrete subtypes for `regular-path`:
+
+  (defdata-object regular-absolute-path (regular-path absolute-path)
+    (:derive-equal path=))
+
+  (defdata-object regular-relative-path (regular-path relative-path)
+    (:derive-equal path=))
+
+`defdata-object` defines an instantiable class with instance slots. In this
+case, the only instance slot is inherited from `regular-path`.
+
+OK, we've got all data types now! What's left to do? Methods for `pathroot`,
+`join-paths`, `absolutep` and `native-path`. Here comes `defmethods` into play.
+Let's start with `pathroot`:
+
+  (defmethods pathroot
+    (= ((_ relative-path))
+       (make current-dir))
+    (= ((_ absolute-path))
+       (make root-dir)))
+
+Each clause that starts with an `=` sign adds a method to the generic function
+`pathroot`. Per convention, the underline is used for unused parameter names.
+The best way to learn `defmethods` is to macroexpand the examples given here. On
+to `absolutep`:
+
+  (defmethods absolutep
+    (= ((_ relative-path))
+       nil)
+    (= ((_ absolute-path))
+       t))
+
+Nothing new here, `join-paths` gets more interesting:
+
+  (defmethods join-paths
+    (= ((a absolute-path) (b regular-relative-path))
+       (mk regular-absolute-path))
+    (= ((a relative-path) (b regular-relative-path))
+       (mk regular-relative-path))
+    (syntax mk (regclass)
+            `(make ,regclass :pathlist (append (pathlist a) (pathlist b)))))
+
+A `syntax` clause defines a macro that is available in the `defmethods` body. A
+`defmethods` can have any number of `syntax` clauses.
+
+  (defmethods native-path
+    (= ((_ current-dir))
+       ".")
+    (= ((path unix-path))
+       (with-output-to-string (res)
+         (when (absolutep path) (write-char #\/ res))
+         (labels ((out (components)
+                    (write-string (car components) res)
+                    (when (cdr components)
+                      (write-char #\/ res)
+                      (out (cdr components)))))
+           (when (pathlist path) (out (pathlist path)))))))
+
+For convenience, we specify a `print-object` method for paths:
+
+  (defmethod print-object ((path path) stream)
+    (write `(path ,(native-path path)) :stream stream))
+
+And finally, we can play at the REPL:
+
+    CL-USER> (defparameter *a* (make regular-relative-path :pathlist '("foo" "bar")))
+    *A*
+    CL-USER> *a*
+    (PATH "foo/bar")
+    CL-USER> (pathroot *a*)
+    (PATH ".")
+    CL-USER> (pathlist *a*)
+    ("foo" "bar")
+    CL-USER> (absolutep *a*)
+    NIL
+    CL-USER> (defparameter *b* (make regular-absolute-path :pathlist '("foo" "bar")))
+    *B*
+    CL-USER> *b*
+    (PATH "/foo/bar")
+    CL-USER> (absolutep *b*)
+    T
+    CL-USER> (path= *a* *b*)
+    NIL
+    CL-USER> (join-paths *b* *a*)
+    (PATH "/foo/bar/foo/bar")
+    CL-USER> (pathroot *b*)
+    (PATH "/")
+
+Wait, there's more!
+-------------------
+
+We've seen the `=` and `syntax` clauses for `defmethods` already. There are two
+additional clauses, namely `where`, to define local functions, and `expr` to
+define a local symbol macro. A silly example using both:
+
+  (defmethods foo
+    (= ((a string) (b string))
+       (wr "strings" a b len))
+    (= ((a list) (b list))
+       (wr "lists" a b len))
+    (where wr (type a b combined-length)
+           (format t "~A ~S ~S, combined length: ~A~%" type a b combined-length))
+    (expr len (+ (length a) (length b))))
+
+We could also pull the usage of `len` into `wr`, and ditch the `combined-length`
+parameter.
+
+At the REPL:
+
+    CL-USER> (foo "hello" "world")
+    strings "hello" "world", combined length: 10
+    NIL
+    CL-USER> (foo '(1 2 3) '(4 5 6))
+    lists (1 2 3) (4 5 6), combined length: 6
+    NIL
+
+It doesn't matter from which package the clause name symbols, `=`, `where`,
+`syntax` and `expr` come, only their `symbol-name` matters. A `defmethods`
+expands into a `symbol-macrolet` wrapped around a `macrolet` wrapped around a
+`labels` wrapped around `defmethod` forms. It follows that functions defined via
+`where` can be recursive and can refer to each other.

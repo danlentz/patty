@@ -1,0 +1,6 @@
+
+== darcs
+
+Releases are tagged with "r<version>". E.g. release 1.0.0 is tagged via
+
+    $ darcs tag "r1.0.0"
